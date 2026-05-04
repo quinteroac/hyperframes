@@ -22,6 +22,17 @@ Globals:
 - `window.__renderReady`
 - `window.__timelines`
 - `window.__clipManifest`
+- `window.__hyperframes`
+- `window.__hfSprites`
+
+`window.__hyperframes` exposes runtime helpers for composition scripts. Current helpers:
+
+- `fitTextFontSize` for deterministic text fitting.
+- `createAsepriteSpriteAnimator` for deterministic Aseprite-style spritesheet playback.
+
+`window.__hfSprites` is the sprite adapter registry. Composition scripts should use
+`window.__hyperframes.createAsepriteSpriteAnimator(...)`; the helper registers each
+animator so runtime seek/pause/play calls keep sprites deterministic.
 
 postMessage:
 

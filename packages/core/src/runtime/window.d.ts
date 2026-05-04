@@ -1,6 +1,8 @@
 import type { RuntimeTimelineMessage, RuntimeTimelineLike } from "./types";
+import type { AsepriteSpriteAnimator, createAsepriteSpriteAnimator } from "./adapters/sprites";
 import type { HyperframePickerApi } from "../inline-scripts/pickerApi";
 import type { PlayerAPI } from "../core.types";
+import type { fitTextFontSize } from "../text/fitTextFontSize";
 
 type ThreeClockLike = {
   elapsedTime: number;
@@ -27,6 +29,10 @@ type ThreeLike = {
 declare global {
   interface Window {
     __timelines: Record<string, RuntimeTimelineLike>;
+    __hyperframes?: {
+      createAsepriteSpriteAnimator: typeof createAsepriteSpriteAnimator;
+      fitTextFontSize: typeof fitTextFontSize;
+    };
     __player?: PlayerAPI;
     __clipManifest?: RuntimeTimelineMessage;
     __playerReady?: boolean;
@@ -78,6 +84,11 @@ declare global {
      *   window.__hfLottie.push(anim);
      */
     __hfLottie?: unknown[];
+    /**
+     * Aseprite spritesheet animators registered by compositions.
+     * The sprite adapter seeks all instances when the player is seeked.
+     */
+    __hfSprites?: AsepriteSpriteAnimator[];
   }
 }
 

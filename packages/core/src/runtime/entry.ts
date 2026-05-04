@@ -1,9 +1,11 @@
 import { initSandboxRuntimeModular } from "./init";
+import { createAsepriteSpriteAnimator } from "./adapters/sprites";
 import { fitTextFontSize } from "../text/fitTextFontSize";
 
 type HyperframeWindow = Window & {
   __hyperframeRuntimeBootstrapped?: boolean;
   __hyperframes?: {
+    createAsepriteSpriteAnimator: typeof createAsepriteSpriteAnimator;
     fitTextFontSize: typeof fitTextFontSize;
   };
 };
@@ -15,6 +17,8 @@ type HyperframeWindow = Window & {
 // Expose text utilities immediately so composition scripts can use them
 // before DOMContentLoaded (font sizing runs during script evaluation).
 (window as HyperframeWindow).__hyperframes = {
+  ...((window as HyperframeWindow).__hyperframes ?? {}),
+  createAsepriteSpriteAnimator,
   fitTextFontSize,
 };
 
